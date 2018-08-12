@@ -25,6 +25,10 @@
     function ejecutarQuery($query){
       return $this->conexion->query($query);
     }
+
+    function cerrarConexion(){
+      return $this->conexion->close();
+    }
   }
 
  ?>

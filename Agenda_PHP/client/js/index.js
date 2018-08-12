@@ -30,11 +30,12 @@ class Login {
       success: function(php_response){
         if (php_response.msg == "OK") {
           window.location.href = 'main.html';
-        }else {
+        } else {
           alert(php_response.msg);
         }
       },
-      error: function(){
+      error: function(error){
+        console.log(error);
         alert("error en la comunicación con el servidor");
       }
     })

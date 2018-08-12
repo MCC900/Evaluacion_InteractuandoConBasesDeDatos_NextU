@@ -11,9 +11,10 @@
   echo "Conectando... " . $conector->initConexion("agenda_db")."<br>";
 
   //-----Creamos 3 usuarios manualmente usando la función descrita abajo-----
-  crearUsuario("'mcc900@adinet.com.uy'", "'Julio Mariano Cis Carle'", "12345", "'23-10-1992'", $conector);
-  crearUsuario("'juandez@gmail.com.uy'", "'Juan Hernández Casas'", "98765", "'13-05-1973'", $conector);
-  crearUsuario("'pedro123@gmail.com.uy'", "'Pedro Vedel'", "passpv", "'12-01-1995'", $conector);
+  crearUsuario("'mcc900@adinet.com.uy'", "'Julio Mariano Cis Carle'", "12345", "'1992-10-23'", $conector);
+  crearUsuario("'juandez@gmail.com'", "'Juan Hernández Casas'", "98765", "'1973-05-13'", $conector);
+  crearUsuario("'pedro123@gmail.com'", "'Pedro Vedel'", "passpv", "'1995-12-01'", $conector);
+  $conector->cerrarConexion();
 
   //-----FUNCIÓN: Crea un usuario en la base de datos-----
   function crearUsuario($email, $nombre, $contrasena, $fechaNacimiento, $conector){
@@ -30,7 +31,6 @@
       echo mysqli_error($conector->conexion)."<br>";
     };
   }
-
 
 
 
