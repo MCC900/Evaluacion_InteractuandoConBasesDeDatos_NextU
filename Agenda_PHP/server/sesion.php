@@ -10,4 +10,10 @@
   function logout(){
     session_close();
   }
+
+  //-----Función que obtiene el usuario logueado actualmente-----
+  function getUsuario(){
+    session_start();
+    return $_SESSION["usuarioLogueado"];
+  }
  ?>

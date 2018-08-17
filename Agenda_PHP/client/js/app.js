@@ -20,11 +20,13 @@ class EventsManager {
             if (data.msg=="OK") {
               this.poblarCalendario(data.eventos)
             }else {
-              alert(data.msg)
+              alert(data.msg);
               window.location.href = 'index.html';
             }
           },
-          error: function(){
+          error: function(data, status, error){
+            console.log(data);
+            console.log(error);
             alert("error en la comunicación con el servidor");
           }
         })

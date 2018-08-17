@@ -18,6 +18,7 @@
       if ($this->conexion->connect_error) {
         return $this->conexion;
       }else {
+        mysqli_set_charset($this->conexion, "utf8");
         return "OK";
       }
     }
