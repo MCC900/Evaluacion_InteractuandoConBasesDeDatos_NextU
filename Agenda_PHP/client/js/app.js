@@ -106,21 +106,20 @@ class EventsManager {
             }else {
               $('.calendario').fullCalendar('renderEvent', {
                 title: $('#titulo').val(),
-                start: $('#start_date').val()+" "+$('#start_hour').val(),
+                start: $('#start_date').val()+"T"+$('#start_hour').val(),
                 allDay: false,
-                end: $('#end_date').val()+" "+$('#end_hour').val()
+                end: $('#end_date').val()+"T"+$('#end_hour').val()
               })
             }
-
-
-
 
           }else {
             alert(data.msg)
           }
         },
-        error: function(){
+        error: function(data, status, error){
           alert("error en la comunicación con el servidor");
+          console.log(data);
+          console.log(error);
         }
       })
 

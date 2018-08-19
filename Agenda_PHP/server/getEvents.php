@@ -31,7 +31,7 @@
 
         while($fila = $resQuery->fetch_assoc()){
           //Creamos el objeto del evento
-
+          $evento = array(); //Es importante reiniciar el array para evitar problemas
           $evento['title'] = $fila['titulo'];
           $evento['start'] = $fila['fecha_inicio'];
 
@@ -46,7 +46,7 @@
               $evento['end'] .= "T".$fila['hora_finalizacion'];
             }
           }
-          
+
           $evento['allDay'] = $fila['dia_completo'] == 0 ? false : true;
           $respuesta["eventos"][] = $evento;
         }
