@@ -37,12 +37,15 @@
         $sql = "INSERT into eventos(titulo, fecha_inicio, dia_completo, fk_usuario)".
         " VALUES('".$titulo."','".$fecha_inicio."',TRUE,'".$usuario."');";
       }
-      
+
       //Ejecutamos la query
       $resQuery = $conector->ejecutarQuery($sql);
 
       if($resQuery){
           $respuesta["msg"] = "OK"; //Evento insertado
+          //Ahora obtendremos la id del evento asignada automáticamente por la base de datos (ver doc. de MySQLi)
+          $respuesta["idEvento"] = $conector->conexion->insert_id;
+          //$respuesta["idEvento"] =
       } else {
           //Query no ejecuta correctamente
           $respuesta["msg"] = "ERROR: La query SQL para insertar el nuevo evento '".$titulo."' no se realizó correctamente";

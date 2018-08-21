@@ -20,7 +20,7 @@
       //Conexión establecida
 
       //Obtenemos los eventos
-      $sql = "SELECT titulo, fecha_inicio, hora_inicio,
+      $sql = "SELECT id, titulo, fecha_inicio, hora_inicio,
         fecha_finalizacion, hora_finalizacion, dia_completo, fk_usuario
         FROM eventos WHERE fk_usuario='".$usuario."'";
 
@@ -32,6 +32,7 @@
         while($fila = $resQuery->fetch_assoc()){
           //Creamos el objeto del evento
           $evento = array(); //Es importante reiniciar el array para evitar problemas
+          $evento['id'] = $fila['id'];
           $evento['title'] = $fila['titulo'];
           $evento['start'] = $fila['fecha_inicio'];
 
