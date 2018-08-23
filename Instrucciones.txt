@@ -1,0 +1,14 @@
+Proyecto PHP:
+
+El código SQL para crear la base de datos, sus tablas, y los usuarios requeridos en el proyecto PHP
+está contenido en el archivo agenda_db.sql. Debe ejecutarse este código primero y luego, el archivo
+create_user.php desde el navegador para crear los 3 usuarios con sus contraseñas, que son:
+
+usuario: mcc900@adinet.com.uy
+   pass: 12345
+
+usuario: juandez@gmail.com
+   pass: 98765
+
+usuario: pedro123@gmail.com
+   pass: passpv
