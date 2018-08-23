@@ -5,8 +5,8 @@
   //-----Conectamos con la base de datos-----
   $conector = new ConectorBD(
     "localhost",
-    "agenda_usuario_anonimo",
-    "contrausuanon"
+    "agenda_crearUsuario",
+    "crsususu2224"
   );
   echo "Conectando... " . $conector->initConexion("agenda_db")."<br>";
 

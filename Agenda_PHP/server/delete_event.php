@@ -12,8 +12,8 @@
     //-----Conectamos con la base de datos-----
     $conector = new ConectorBD(
       "localhost",
-      "agenda_usuario_logueado",
-      "usulog214365"
+      "agenda_eliminarEvento",
+      "elim8787879a"
     );
 
     $conexion = $conector->initConexion("agenda_db");
