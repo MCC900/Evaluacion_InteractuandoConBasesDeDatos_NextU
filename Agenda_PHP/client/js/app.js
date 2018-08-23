@@ -158,24 +158,22 @@ class EventsManager {
     actualizarEvento(evento) {
         let id = evento.id,
             start = moment(evento.start).format('YYYY-MM-DD HH:mm:ss'),
-            end = moment(evento.end).format('YYYY-MM-DD HH:mm:ss'),
-            form_data = new FormData(),
-            start_date,
-            end_date,
-            start_hour,
-            end_hour
+            form_data = new FormData()
 
-        start_date = start.substr(0,10)
-        end_date = end.substr(0,10)
-        start_hour = start.substr(11,8)
-        end_hour = end.substr(11,8)
-
+        let start_date = start.substr(0,10)
 
         form_data.append('id', id)
         form_data.append('start_date', start_date)
-        form_data.append('end_date', end_date)
-        form_data.append('start_hour', start_hour)
-        form_data.append('end_hour', end_hour)
+
+        if(!evento.allDay){
+          let start_hour = start.substr(11,8)
+          let end = moment(evento.end).format('YYYY-MM-DD HH:mm:ss')
+          let end_date = end.substr(0,10)
+          let end_hour = end.substr(11,8)
+          form_data.append('end_date', end_date)
+          form_data.append('end_hour', end_hour)
+          form_data.append('start_hour', start_hour)
+        }
 
         $.ajax({
           url: '../server/update_event.php',
@@ -192,7 +190,9 @@ class EventsManager {
               alert(data.msg)
             }
           },
-          error: function(){
+          error: function(data, status, error){
+            console.log(data);
+            console.log(error);
             alert("error en la comunicación con el servidor");
           }
         })

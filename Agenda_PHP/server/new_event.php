@@ -28,11 +28,11 @@
       //Conexión establecida
 
       //Creamos el SQL
-      if($dia_completo === TRUE){
+      if($dia_completo === "false"){
         $sql = "INSERT into eventos(titulo, fecha_inicio, hora_inicio,".
           "fecha_finalizacion, hora_finalizacion, dia_completo, fk_usuario)".
           " VALUES('".$titulo."','".$fecha_inicio."','".$hora_inicio."','".$fecha_fin."','".
-          $hora_fin."',TRUE,'".$usuario."');";
+          $hora_fin."',FALSE,'".$usuario."');";
       } else {
         $sql = "INSERT into eventos(titulo, fecha_inicio, dia_completo, fk_usuario)".
         " VALUES('".$titulo."','".$fecha_inicio."',TRUE,'".$usuario."');";
