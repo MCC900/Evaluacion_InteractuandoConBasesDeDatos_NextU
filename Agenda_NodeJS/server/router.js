@@ -19,4 +19,18 @@ router.get("/crear", function(req, res){
   })
 });
 
+router.post("/login", function(req, res){
+  let email = req.body.user;
+  Usuario.findOne({email:email}).exec(function(error, usu){
+    if(error){
+      res.send("Error al realizar la consulta en la base de datos.");
+    } else {
+      if(usu.contrasena == req.body.pass){
+        res.send("Validado");
+      } else {
+        res.send("Error: La contraseña para el usuario "+email+" es incorrecta.");
+      }
+    }
+  });
+});
 module.exports = router;

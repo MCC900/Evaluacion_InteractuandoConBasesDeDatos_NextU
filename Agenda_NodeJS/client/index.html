@@ -5,7 +5,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inicio de sesión</title>
-    <link rel="stylesheet" href="css/styles.css"/>
+    <link rel="stylesheet" href="styles.css"/>
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script|Neucha" rel="stylesheet">
   </head>
@@ -18,7 +18,7 @@
         <button id="login" class="loginButton">Ingresar</button>
       </div>
     </div>
-    <script src="js/jquery.js"></script>
+    <script src="jquery.js"></script>
     <script>
         var nombreUsuario = $('#user')
         var pass = $('#pass')
@@ -27,6 +27,8 @@
                 $.post('/login',{user: nombreUsuario.val(), pass: pass.val()}, function(response) {
                     if (response == "Validado") {
                         window.location.href = "http://localhost:3000/main.html"
+                    } else {
+                      alert(response);
                     }
                 })
             } else {
