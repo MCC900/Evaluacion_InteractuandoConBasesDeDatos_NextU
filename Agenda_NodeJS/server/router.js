@@ -1,5 +1,7 @@
 const router = require('express').Router();
-const Usuario = require('./modelos.js');
+const modelos = require("./modelos.js");
+const Usuario = modelos.Usuario;
+const Evento = modelos.Evento;
 
 router.get("/crear", function(req, res){
   let usuarioNuevo = new Usuario({
@@ -19,6 +21,59 @@ router.get("/crear", function(req, res){
   })
 });
 
+router.get("/events/all", function(req, res){
+  Evento.find({usuario:"mcc900@adinet.com.uy"}).exec((error, resultado) => {
+      if(error){
+        res.status = 500;
+        res.send("Error al intentar obtener eventos de la base de datos.");
+      } else {
+        let eventos = [];
+        for(let i = 0; i < resultado.length; i++){
+          let evRes = resultado[i];
+          let evento;
+          if(evRes.fin){
+            evento = {
+              title:evRes.titulo,
+              start:evRes.inicio,
+              end:evRes.fin
+            }
+          } else {
+            evento = {
+              title:evRes.titulo,
+              start:evRes.inicio
+            }
+          }
+          eventos[eventos.length] = evento;
+        }
+        res.json(eventos);
+      }
+  });
+});
+
+router.get("/events/delete", function(req, res){
+
+});
+
+router.post("/events/new", function(req, res){
+
+  let eventoNuevo = new Evento({
+    usuario:"mcc900@adinet.com.uy",
+    titulo:req.body.title,
+    inicio:req.body.start,
+    fin:req.body.end //Aparentemente, si está vacío (caso de día completo)
+                     // mongoose automáticamente lo toma como inexistente
+  });
+
+  eventoNuevo.save(function(error){
+    if(error){
+      res.status(500);
+      res.json(error);
+    } else {
+      res.send("Evento "+eventoNuevo.titulo+" añadido exitosamente a la base de datos.");
+    }
+  })
+});
+
 router.post("/login", function(req, res){
   let email = req.body.user;
   Usuario.findOne({email:email}).exec(function(error, usu){
@@ -33,4 +88,5 @@ router.post("/login", function(req, res){
     }
   });
 });
+
 module.exports = router;

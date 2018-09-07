@@ -8,5 +8,13 @@ var usuarioSchema = new Schema({
   fechaNac: {type:String, required:true}
 });
 
+var eventoSchema = new Schema({
+  usuario:{type:String, require:true},
+  titulo:{type:String, required:true},
+  inicio:{type:String, required:true},
+  fin:{type:String, required:false}
+});
+
 var Usuario = mongoose.model('Usuario', usuarioSchema);
-module.exports = Usuario;
+var Evento = mongoose.model('Evento', eventoSchema);
+module.exports = {Usuario:Usuario, Evento:Evento};
