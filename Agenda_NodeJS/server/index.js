@@ -25,4 +25,4 @@ servidor.listen(puerto, function(){
 });
 
 let url = "mongodb://localhost/agenda_db";
-mongoose.connect(url);
+mongoose.connect(url, {useNewUrlParser:true});

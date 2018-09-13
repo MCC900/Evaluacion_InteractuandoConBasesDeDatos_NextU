@@ -9,12 +9,19 @@ var usuarioSchema = new Schema({
 });
 
 var eventoSchema = new Schema({
+  id:{type:Number, require:true},
   usuario:{type:String, require:true},
   titulo:{type:String, required:true},
   inicio:{type:String, required:true},
   fin:{type:String, required:false}
 });
 
+var idSchema = new Schema({
+  nombreElemento:{type:String, require:true},
+  ultimaId:{type:Number, require:true}
+});
+
 var Usuario = mongoose.model('Usuario', usuarioSchema);
 var Evento = mongoose.model('Evento', eventoSchema);
-module.exports = {Usuario:Usuario, Evento:Evento};
+var RegistroId = mongoose.model('RegistroId', idSchema);
+module.exports = {Usuario:Usuario, Evento:Evento, RegistroId:RegistroId};

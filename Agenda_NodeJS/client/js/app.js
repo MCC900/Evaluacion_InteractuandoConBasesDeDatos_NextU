@@ -1,4 +1,3 @@
-
 class EventManager {
     constructor() {
         this.urlBase = "/events"
@@ -46,9 +45,14 @@ class EventManager {
                     end: end
                 }
                 $.post(url, ev, (response) => {
-                    alert(response)
+                    if(response.msg){
+                      alert(response.msg + " ID:" + response.idEvento);
+                      ev.id = response.idEvento;
+                      $('.calendario').fullCalendar('renderEvent', ev)
+                    } else {
+                      alert(response);
+                    }
                 })
-                $('.calendario').fullCalendar('renderEvent', ev)
             } else {
                 alert("Complete los campos obligatorios para el evento")
             }

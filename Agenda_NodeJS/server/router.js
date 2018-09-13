@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const modelos = require("./modelos.js");
+const ManagerIds = require("./managerids.js");
+
 const Usuario = modelos.Usuario;
 const Evento = modelos.Evento;
 
@@ -38,15 +40,17 @@ router.get("/events/all", function(req, res){
           let evento;
           if(evRes.fin){
             evento = {
+              id:evRes.id,
               title:evRes.titulo,
               start:evRes.inicio,
               end:evRes.fin
-            }
+            };
           } else {
             evento = {
+              id:evRes.id,
               title:evRes.titulo,
               start:evRes.inicio
-            }
+            };
           }
           eventos[eventos.length] = evento;
         }
@@ -55,8 +59,14 @@ router.get("/events/all", function(req, res){
   });
 });
 
-router.get("/events/delete", function(req, res){
-
+router.post("/events/delete/:id", function(req, res){
+  Evento.deleteOne({id:req.params.id}).exec(function(error){
+    if(error){
+      res.json(error);
+    } else {
+      res.send("Evento eliminado exitosamente. Id:"+req.params.id);
+    }
+  });
 });
 
 router.post("/events/new", function(req, res){
@@ -65,22 +75,28 @@ router.post("/events/new", function(req, res){
     return;
   }
 
-  let eventoNuevo = new Evento({
-    usuario:req.session.usuario,
-    titulo:req.body.title,
-    inicio:req.body.start,
-    fin:req.body.end //Aparentemente, si está vacío (caso de día completo)
-                     // mongoose automáticamente lo toma como inexistente
-  });
+  ManagerIds.getIdNuevoEvento(function(idEvento){
+    let eventoNuevo = new Evento({
+      id:idEvento,
+      usuario:req.session.usuario,
+      titulo:req.body.title,
+      inicio:req.body.start,
+      fin:req.body.end //Aparentemente, si está vacío (caso de día completo)
+                       // mongoose automáticamente lo toma como inexistente
+    });
 
-  eventoNuevo.save(function(error){
-    if(error){
-      res.status(500);
-      res.json(error);
-    } else {
-      res.send("Evento "+eventoNuevo.titulo+" añadido exitosamente a la base de datos.");
-    }
-  })
+    eventoNuevo.save(function(error){
+      if(error){
+        res.status(500);
+        res.json(error);
+      } else {
+        res.json({
+          msg:"Evento "+eventoNuevo.titulo+" añadido exitosamente a la base de datos.",
+          idEvento:idEvento
+        });
+      }
+    });
+  });
 });
 
 router.post("/login", function(req, res){
