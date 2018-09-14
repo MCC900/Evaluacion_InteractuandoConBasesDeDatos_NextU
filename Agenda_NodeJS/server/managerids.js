@@ -1,23 +1,34 @@
 const modelos = require("./modelos.js");
-const RegistroId = modelos.RegistroId;
+const UltimaIdEvento = modelos.UltimaIdEvento;
 
-function getIdNuevoEvento(callback){
-  RegistroId.findOne({nombreElemento:"Evento"}).exec(function(error, resultado){
+function getIdNuevoEvento(usuario, callback){
+  UltimaIdEvento.findOne({usuario:usuario}).exec(function(error, resultado){
     if(error){
       callback(-1);
     } else {
       let idNuevoEvento;
       if(resultado == null){
-        regIdEvento = new RegistroId({
-          nombreElemento:"Evento",
+        let regIdEvento = new UltimaIdEvento({
+          usuario:usuario,
           ultimaId:0
         });
-        regIdEvento.save();
-        idNuevoEvento = 0;
+        regIdEvento.save(function(error){
+          if(error){
+            callback(-1);
+          } else {
+            callback(0);
+          }
+        });
       } else {
-        idNuevoEvento = resultado.ultimaId + 1;
+        let nuevaId = resultado.ultimaId + 1;
+        UltimaIdEvento.updateOne({usuario:usuario}, {ultimaId:nuevaId}, function(error, resActualizado){
+          if(error){
+            callback(-1);
+          } else {
+            callback(nuevaId);
+          }
+        });
       }
-      callback(idNuevoEvento);
     }
   });
 }

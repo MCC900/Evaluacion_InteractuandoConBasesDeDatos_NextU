@@ -9,14 +9,22 @@ class EventManager {
     obtenerDataInicial() {
         let url = this.urlBase + "/all"
         $.get(url, (response) => {
-            this.inicializarCalendario(response)
+          if(response == "loginExpira"){
+            window.location.href = "http://localhost:3000/index.html";
+          } else {
+            this.inicializarCalendario(response);
+          }
         })
     }
 
     eliminarEvento(evento) {
         let eventId = evento.id
         $.post('/events/delete/'+eventId, {id: eventId}, (response) => {
-            alert(response)
+            if(response == "loginExpira"){
+              window.location.href = "http://localhost:3000/index.html";
+            } else {
+              alert(response);
+            }
         })
     }
 
@@ -50,13 +58,48 @@ class EventManager {
                       ev.id = response.idEvento;
                       $('.calendario').fullCalendar('renderEvent', ev)
                     } else {
-                      alert(response);
+                      if(response == "loginExpira"){
+                        window.location.href = "http://localhost:3000/index.html";
+                      } else {
+                        alert(response);
+                      }
                     }
                 })
             } else {
                 alert("Complete los campos obligatorios para el evento")
             }
         })
+    }
+
+    actualizarEvento(evento){
+      let inicio = moment(evento.start).format();
+      let ev;
+      if(evento.end){
+          let fin = moment(evento.end).format();
+          ev = {
+          id:evento.id,
+          title:evento.title,
+          start:inicio,
+          end:fin
+        }
+      } else {
+        ev = {
+          id:evento.id,
+          title:evento.title,
+          start:inicio
+        }
+      }
+      $.post("/events/update", ev, (resultado)=>{
+        if(resultado.msg){
+          alert(resultado.msg + " ID:"+resultado.idEvento);
+        } else {
+          if(resultado == "loginExpira"){
+            window.location.href = "http://localhost:3000/index.html";
+          } else {
+            alert(resultado);
+          }
+        }
+      });
     }
 
     inicializarFormulario() {
@@ -99,7 +142,7 @@ class EventManager {
             dragRevertDuration: 0,
             timeFormat: 'H:mm',
             eventDrop: (event) => {
-                this.actualizarEvento(event)
+              this.actualizarEvento(event);
             },
             events: eventos,
             eventDragStart: (event,jsEvent) => {

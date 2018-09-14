@@ -17,11 +17,11 @@ var eventoSchema = new Schema({
 });
 
 var idSchema = new Schema({
-  nombreElemento:{type:String, require:true},
+  usuario:{type:String, require:true},
   ultimaId:{type:Number, require:true}
 });
 
 var Usuario = mongoose.model('Usuario', usuarioSchema);
 var Evento = mongoose.model('Evento', eventoSchema);
-var RegistroId = mongoose.model('RegistroId', idSchema);
-module.exports = {Usuario:Usuario, Evento:Evento, RegistroId:RegistroId};
+var UltimaIdEvento = mongoose.model('UltimaIdEvento', idSchema);
+module.exports = {Usuario:Usuario, Evento:Evento, UltimaIdEvento:UltimaIdEvento};

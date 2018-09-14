@@ -60,6 +60,10 @@ router.get("/events/all", function(req, res){
 });
 
 router.post("/events/delete/:id", function(req, res){
+  if(!req.session.logueado){
+    res.send("loginExpira");
+    return;
+  }
   Evento.deleteOne({id:req.params.id}).exec(function(error){
     if(error){
       res.json(error);
@@ -75,7 +79,7 @@ router.post("/events/new", function(req, res){
     return;
   }
 
-  ManagerIds.getIdNuevoEvento(function(idEvento){
+  ManagerIds.getIdNuevoEvento(req.session.usuario, function(idEvento){
     let eventoNuevo = new Evento({
       id:idEvento,
       usuario:req.session.usuario,
@@ -96,6 +100,31 @@ router.post("/events/new", function(req, res){
         });
       }
     });
+  });
+});
+
+router.post("/events/update", function(req, res){
+  if(!req.session.logueado){
+    res.send("loginExpira");
+    return;
+  }
+
+  let eventoActualizado = {
+    usuario:req.session.usuario,
+    titulo:req.body.title,
+    inicio:req.body.start,
+    fin:req.body.end
+  };
+  Evento.updateOne({id:req.body.id}, eventoActualizado, function(error, evento){
+    if(error){
+      res.status(500);
+      res.json(error);
+    } else {
+      res.json({
+        msg:"Evento "+eventoActualizado.titulo+" modificado exitosamente.",
+        idEvento:req.body.id
+      });
+    }
   });
 });
 
