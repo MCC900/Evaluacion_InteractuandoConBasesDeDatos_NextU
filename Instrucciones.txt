@@ -1,4 +1,4 @@
-Proyecto PHP:
+----------------------Proyecto PHP----------------------
 
 El código SQL para crear la base de datos, sus tablas, y los usuarios requeridos en el proyecto PHP
 está contenido en el archivo agenda_db.sql. Debe ejecutarse este código primero y luego, el archivo
@@ -12,3 +12,12 @@ usuario: juandez@gmail.com
 
 usuario: pedro123@gmail.com
    pass: passpv
+
+-----------------------Proyecto NODE.JS----------------------
+
+Para ejecutar la web de node.js, primero se inicia mongod (no incluído en el proyecto), y luego se ejecuta el comando
+"npm start" en la carpeta Agenda_NodeJS, o "node server/index.js" en su defecto. Entramos a "localhost:3000", y accedemos
+a la consola del navegador, donde ejecutamos la función crearUsuario() (sin parámetros, estos se piden luego
+de ejecutada la función). Creamos uno o más usuarios y ya se puede hacer login con el email y la contraseña
+y utilizar el sitio web.
+ 

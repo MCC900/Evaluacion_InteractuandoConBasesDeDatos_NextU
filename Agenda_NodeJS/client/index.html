@@ -20,6 +20,44 @@
     </div>
     <script src="jquery.js"></script>
     <script>
+
+        console.log("Para crear un nuevo usuario, ejecute la función 'crearUsuario()' aquí");
+        //Para crear un nuevo usuario, ejecutar esta funcion desde consola en esta página
+        function crearUsuario(){
+          console.log("...Ingrese los datos en los popups que aparecen en la página.");
+          let email, contrasena, nombre, fechaNac;
+          while(true){
+            email = prompt("Ingrese un email para el nuevo usuario", "mcc900@adinet.com.uy");
+            if(email != "")
+              break;
+          }
+          while(true){
+            contrasena = prompt("Ingrese una contraseña", "12345");
+            if(contrasena != "")
+              break;
+          }
+          while(true){
+            nombre = prompt("Ingrese un nombre completo", "J. Mariano Cis Carle");
+            if(nombre != "")
+              break;
+          }
+          while(true){
+            fechaNac = prompt("Ingrese una fecha de nacimiento en cualquier formato", "23/10/1992");
+            if(fechaNac != "")
+              break;
+          }
+          let usuario = {email:email, contrasena:contrasena, nombre:nombre, fechaNac:fechaNac};
+          $.post("/crear", usuario, function(respuesta){
+            if(respuesta.error){
+              alert(respuesta.msg);
+              console.log(respuesta.error);
+            } else {
+              alert(respuesta);
+            }
+          });
+        }
+
+        //-------Código de la página------
         var nombreUsuario = $('#user')
         var pass = $('#pass')
         $('.loginButton').on('click', function(event) {

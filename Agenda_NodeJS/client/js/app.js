@@ -71,24 +71,29 @@ class EventManager {
         })
     }
 
+    //------Función faltante "actualizarEvento" añadida------
     actualizarEvento(evento){
       let inicio = moment(evento.start).format();
       let ev;
       if(evento.end){
-          let fin = moment(evento.end).format();
-          ev = {
+        //Evento NO es de día completo
+        let fin = moment(evento.end).format();
+        ev = {
           id:evento.id,
           title:evento.title,
           start:inicio,
           end:fin
         }
       } else {
+        //Evento es de día completo
         ev = {
           id:evento.id,
           title:evento.title,
           start:inicio
         }
       }
+
+      //Enviamos el post
       $.post("/events/update", ev, (resultado)=>{
         if(resultado.msg){
           alert(resultado.msg + " ID:"+resultado.idEvento);
